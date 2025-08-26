@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { SupabaseService } from '../services/supabase';
 
 @Component({
   selector: 'app-login',
@@ -17,21 +18,24 @@ export class LoginPage implements OnInit {
   error = '';
   loading = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private supabase: SupabaseService) {}
 
-  login() {
+  async login() {
     this.loading = true;
     this.error = '';
 
-    // Simulate an async login operation
-    setTimeout(() => {
-      this.loading = false;
-      if (this.email === 'test@test.com' && this.password === '123456') {
-        this.router.navigate(['/tabs']);
-      } else {
-        this.error = 'Invalid email or password';
-      }
-    }, 1000);
+    const { data, error } = await this.supabase.login(
+      this.email,
+      this.password
+    );
+
+    this.loading = false;
+
+    if (error) {
+      this.error = error.message;
+    } else {
+      this.router.navigate(['/tabs']);
+    }
   }
 
   ngOnInit() {}
