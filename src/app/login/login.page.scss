@@ -1,0 +1,11 @@
+.login-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+
+  ion-card {
+    width: 100%;
+    max-width: 400px;
+  }
+}
