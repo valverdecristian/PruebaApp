@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {
+  IonicModule,
+  LoadingController,
+  ToastController,
+} from '@ionic/angular';
 import { SupabaseService } from '../services/supabase';
 
 @Component({
@@ -16,27 +20,49 @@ export class LoginPage implements OnInit {
   email = '';
   password = '';
   error = '';
-  loading = false;
 
-  constructor(private router: Router, private supabase: SupabaseService) {}
+  constructor(
+    private router: Router,
+    private supabase: SupabaseService,
+    private loadingController: LoadingController,
+    private toastController: ToastController
+  ) {}
 
   async login() {
-    this.loading = true;
     this.error = '';
+    const loading = await this.loadingController.create({
+      message: 'verificando credenciales...',
+      spinner: 'crescent',
+      cssClass: 'custom-loading',
+    });
+
+    await loading.present();
 
     const { data, error } = await this.supabase.login(
       this.email,
       this.password
     );
 
-    this.loading = false;
+    await loading.dismiss();
 
     if (error) {
-      this.error = error.message;
+      this.showToast(error.message, 'danger');
     } else {
+      this.showToast('Inicio de sesión exitoso', 'success');
       this.router.navigate(['/tabs']);
     }
   }
 
   ngOnInit() {}
+
+  async showToast(message: string, color: 'success' | 'danger') {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2500,
+      position: 'bottom',
+      color,
+    });
+
+    await toast.present();
+  }
 }
