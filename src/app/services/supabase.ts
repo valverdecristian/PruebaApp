@@ -18,7 +18,8 @@ export class SupabaseService {
   }
 
   async logout() {
-    return this.supabase.auth.signOut();
+    await this.supabase.auth.signOut();
+    localStorage.clear();
   }
 
   getUser() {

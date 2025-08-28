@@ -34,8 +34,14 @@
 // }
 
 ion-content.login-content {
-  --background: #cd96f0; // fondo violeta
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #cd96f0;
 }
+
 
 .login-wrapper {
   height: 100%;

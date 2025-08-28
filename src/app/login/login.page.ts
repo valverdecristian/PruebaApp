@@ -2,19 +2,38 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import {
-  IonicModule,
-  LoadingController,
-  ToastController,
-} from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { SupabaseService } from '../services/supabase';
+import {
+  IonContent,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonItem,
+  IonLabel,
+  IonButton,
+  IonInput,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonContent,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonItem,
+    IonLabel,
+    IonButton,
+    IonInput,
+  ],
 })
 export class LoginPage implements OnInit {
   email = '';
